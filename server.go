@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 	"net/http"
-	_ "net/http/pprof"
+	_ "net/http/pprof" //nolint:gosec
 	"time"
 )
 
@@ -19,7 +19,7 @@ type config struct {
 	httpListen string
 }
 
-func NewServer(httpListen string) *server {
+func NewServer(httpListen string) *server { //nolint:golint,revive
 	return &server{
 		config: config{
 			httpListen: httpListen,
@@ -45,7 +45,7 @@ func (s *server) Run() {
 
 func (s *server) Shutdown() {
 	log.Println("httpPprof, shutdown...")
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10) //nolint:gomnd
 	defer cancel()
 	err := s.httpServer.Shutdown(ctx)
 	if err != nil {
